@@ -5,3 +5,9 @@ nav {
     align-items: stretch;
 }
 
+.quiz-container {
+    width: 400px;
+    margin: auto;
+    text-align: center;
+}
+
