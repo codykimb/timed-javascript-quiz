@@ -1,4 +1,33 @@
-//pull in objects from page
+// array with questionObjects
+questionObjects = [
+    {
+        question: "Commonly used data types do NOT include:",
+        choices: ["strings", "booleans", "alerts", "numbers"],
+        answer: "alerts"
+    },
+    {
+        question: "The condition in and if/else statement is enclosed with ___.",
+        choices: ["quotes", "curly brackets", "parenthesis", "square brackets"],
+        answer: "parenthesis"
+    },
+    {
+        question: "Arrays in Javascript can be used to store ___.",
+        choices: ["numbers and strings", "other arrays", "booleans", "all of the above"],
+        answer: "all of the above"
+    },
+    {
+        question: "String values must be enclosed within ___ when being assigned to variables.",
+        choices: ["commas", "curly brackets", "quotes", "parenthesis"],
+        answer: "commas"
+    },
+    {
+        question: "A very useful tool used during development and debugging for porinting content to the debugger is:",
+        choices: ["Javascript", "terminal/bash", "for loops", "console.log"],
+        answer: "console.log"
+    },
+]
+
+//link to objects from page
 var highscoreEl = document.querySelector("#highscore")
 var gameTimerEl = document.querySelector("#gameTimer")
 var mainEl= document.querySelector("#container-content")
@@ -37,10 +66,10 @@ function welcomeScreen() {
     mainEl.appendChild(instructions);
     mainEl.appendChild(startQuizBtn);
 
-    //once the button is clicked begin playQuiz function
-    // startQuiz.addEventListener("click", function() {
-    //     playQuiz(questionObjects);
-    // });
+    // once the button is clicked begin playQuiz function
+    startQuizBtn.addEventListener("click", function() {
+        playQuiz(questionObjects);
+    });
 }
 
 //function to clear quiz content
@@ -51,40 +80,37 @@ function clearContent() {
 //function to reset score
 function reset() {
     score = 0
-    timeLeft = 75
+    timeLeft = 0
 }
 
 //function to play quiz
 function playQuiz() {
+    
+    timeLeft = 75;
 
+    //start the timer
+    timerStart();
+
+    //present with questions
+    presentQuestion();
+}
+
+function timerStart() {
+
+    var timeInterval = setInterval(function() {
+        if (timeLeft > 1) {
+            gameTimerEl.textContent = timeLeft
+            timeLeft--
+        }
+        else if (timeLeft === 1) {
+            gameTimerEl.textContent = timeLeft
+            timeLeft--
+        }
+        else {
+            gameTimerEl.textContent = 0
+        }
+
+    }, 1000);
 }
 
 
-// array with questionObjects
-questionObjects = [
-    {
-        question: "Commonly used data types do NOT include:",
-        choices: ["strings", "booleans", "alerts", "numbers"],
-        answer: "alerts"
-    },
-    {
-        question: "The condition in and if/else statement is enclosed with ___.",
-        choices: ["quotes", "curly brackets", "parenthesis", "square brackets"],
-        answer: "parenthesis"
-    },
-    {
-        question: "Arrays in Javascript can be used to store ___.",
-        choices: ["numbers and strings", "other arrays", "booleans", "all of the above"],
-        answer: "all of the above"
-    },
-    {
-        question: "String values must be enclosed within ___ when being assigned to variables.",
-        choices: ["commas", "curly brackets", "quotes", "parenthesis"],
-        answer: "commas"
-    },
-    {
-        question: "A very useful tool used during development and debugging for porinting content to the debugger is:",
-        choices: ["Javascript", "terminal/bash", "for loops", "console.log"],
-        answer: "console.log"
-    },
-]
