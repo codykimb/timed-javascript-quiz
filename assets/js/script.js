@@ -2,28 +2,28 @@
 questionObjects = [
     {
         question: "Commonly used data types do NOT include:",
-        choices: ["strings", "booleans", "alerts", "numbers"],
-        answer: "alerts"
+        choices: ["1. strings", "2. booleans", "3. alerts", "4. numbers"],
+        answer: "3. alerts"
     },
     {
         question: "The condition in and if/else statement is enclosed with ___.",
-        choices: ["quotes", "curly brackets", "parenthesis", "square brackets"],
-        answer: "parenthesis"
+        choices: ["1. quotes", "2. curly brackets", "3. parenthesis", "4. square brackets"],
+        answer: "3. parenthesis"
     },
     {
         question: "Arrays in Javascript can be used to store ___.",
-        choices: ["numbers and strings", "other arrays", "booleans", "all of the above"],
-        answer: "all of the above"
+        choices: ["1. numbers and strings", "2. other arrays", "3. booleans", "4. all of the above"],
+        answer: "4. all of the above"
     },
     {
         question: "String values must be enclosed within ___ when being assigned to variables.",
-        choices: ["commas", "curly brackets", "quotes", "parenthesis"],
-        answer: "commas"
+        choices: ["1. commas", "2. curly brackets", "3. quotes", "4. parenthesis"],
+        answer: "1. commas"
     },
     {
         question: "A very useful tool used during development and debugging for porinting content to the debugger is:",
-        choices: ["Javascript", "terminal/bash", "for loops", "console.log"],
-        answer: "console.log"
+        choices: ["1. Javascript", "2. terminal/bash", "3. for loops", "4. console.log"],
+        answer: "4. console.log"
     },
 ]
 
@@ -68,7 +68,7 @@ function welcomeScreen() {
 
     // once the button is clicked begin playQuiz function
     startQuizBtn.addEventListener("click", function() {
-        playQuiz(questionObjects);
+        playQuiz();
     });
 }
 
@@ -85,19 +85,78 @@ function reset() {
 
 //function to play quiz
 function playQuiz() {
-    
-    timeLeft = 75;
 
     //start the timer
+    timeLeft = 75;
     timerStart();
 
     //present with questions
     presentQuestion();
 }
 
+//function to present questions
+function presentQuestion() {
+
+    //clears HTML content
+    clearContent();
+
+    for (i = 0; i < questionObjects.length; i++) {
+
+        //add question
+        var currentQ = document.createElement("h2");
+        currentQ.setAttribute("question", questionObjects[i].question);
+        currentQ.textContent = questionObjects[i].question;
+        mainEl.appendChild(currentQ);
+
+        //add container for answers
+        var choicesContainer = document.createElement("ol");
+        choicesContainer.setAttribute("id", "choicesContainer");
+        mainEl.appendChild(choicesContainer);
+
+        //add answers 
+        for (j = 0; j < 4; j++) {
+            var choice = document.createElement("li");
+            choice.textContent = questionObjects[i].choices[j];
+            choicesContainer.appendChild(choice);
+        }
+
+        //score after clicking
+        choicesContainer.addEventListener("click", function() {
+            scoreChoice()
+
+        });
+        
+        return;
+    }
+}
+
+function scoreChoice() {
+   var selectedChoice = event.target;
+    console.log(questionObjects[i].answer)
+
+   if (selectedChoice.innerHTML === questionObjects[i].answer) {
+       console.log("Correct answer!")
+       var choiceResponse = document.createElement("h3");
+       choiceResponse.textContent = "Correct!"
+       choicesContainer.appendChild(choiceResponse);
+
+   }
+   else {
+       console.log("Wrong answer!");
+       timeLeft -=10;
+       
+       var choiceResponse = document.createElement("h3");
+       choiceResponse.textContent = "Wrong!"
+       choicesContainer.appendChild(choiceResponse);
+   }
+
+
+}
+
+//function to start timer
 function timerStart() {
 
-    var timeInterval = setInterval(function() {
+    setInterval(function() {
         if (timeLeft > 1) {
             gameTimerEl.textContent = timeLeft
             timeLeft--
@@ -112,5 +171,6 @@ function timerStart() {
 
     }, 1000);
 }
+
 
 

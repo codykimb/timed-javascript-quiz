@@ -12,3 +12,29 @@ nav {
     text-align: center;
 }
 
+.quiz-container ol {
+    
+    list-style: 
+}
+
+.quiz-container li {
+    text-align: left;
+    width: 150px;
+    margin: 20px;
+    padding: 10px;
+    color: white;
+    background-color:navy;
+    border-radius: 10px;
+}
+
+.quiz-container li:hover {
+    background-color: pink;
+    color: navy;
+    list-style-type: none;
+}
+
+h3 {
+    border-top: gray;
+    color: gray;
+    text-align: left;
+}
