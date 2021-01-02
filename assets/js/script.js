@@ -35,6 +35,7 @@ var mainEl= document.querySelector("#container-content")
 // global variables
 var score = 0
 var timeLeft = 0
+qNumber = 0
 
 //call welcomeScreen function
 welcomeScreen();
@@ -97,15 +98,15 @@ function playQuiz() {
 //function to present questions
 function presentQuestion() {
 
-    //clears HTML content
-    clearContent();
-
-    for (i = 0; i < questionObjects.length; i++) {
+    if (qNumber < questionObjects.length) {
+        
+        //clears HTML content
+        clearContent();
 
         //add question
         var currentQ = document.createElement("h2");
-        currentQ.setAttribute("question", questionObjects[i].question);
-        currentQ.textContent = questionObjects[i].question;
+        currentQ.setAttribute("question", questionObjects[qNumber].question);
+        currentQ.textContent = questionObjects[qNumber].question;
         mainEl.appendChild(currentQ);
 
         //add container for answers
@@ -114,27 +115,33 @@ function presentQuestion() {
         mainEl.appendChild(choicesContainer);
 
         //add answers 
-        for (j = 0; j < 4; j++) {
+        for (i = 0; i < 4; i++) {
             var choice = document.createElement("li");
-            choice.textContent = questionObjects[i].choices[j];
+            choice.textContent = questionObjects[qNumber].choices[i];
             choicesContainer.appendChild(choice);
         }
 
         //score after clicking
         choicesContainer.addEventListener("click", function() {
-            scoreChoice()
+            scoreChoice();
 
-        });
-        
-        return;
+            qNumber++;
+
+            presentQuestion();
+
+            }); 
+    }
+
+    else {
+        endGame();
     }
 }
 
 function scoreChoice() {
    var selectedChoice = event.target;
-    console.log(questionObjects[i].answer)
+    console.log(questionObjects[qNumber].answer)
 
-   if (selectedChoice.innerHTML === questionObjects[i].answer) {
+   if (selectedChoice.innerHTML === questionObjects[qNumber].answer) {
        console.log("Correct answer!")
        var choiceResponse = document.createElement("h3");
        choiceResponse.textContent = "Correct!"
@@ -172,5 +179,45 @@ function timerStart() {
     }, 1000);
 }
 
+function timerStop () {
+    clearInterval(timerStart())
+}
+
+//function to end game
+
+function endGame() {
+
+    //clear html content
+    clearContent();
+    
+    //stop timer
+    timerStop();
+
+    var heading = document.createElement("h2");
+    heading.textContent = "All done!";
+
+    score = timeLeft
+
+    var finalScore = document.createElement("p");
+    finalScore.textContent = "Your final score is " + score;
+
+    var initialsLabel = document.createElement("label");
+    initialsLabel.setAttribute("for","userInitials");
+    initialsLabel.textContent = "Enter Initials: ";
+
+    var initialsInput = document.createElement("input");
+    initialsInput.setAttribute("id","userInitials");
+    initialsInput.setAttribute("name","userInitials");
+    initialsInput.setAttribute("minlength","2");
+    initialsInput.setAttribute("maxlength","3");
+    initialsInput.setAttribute("size","3");
+
+    mainEl.appendChild(heading);
+    mainEl.appendChild(finalScore);
+    mainEl.appendChild(initialsLabel);
+    mainEl.appendChild(initialsInput);
+
+
+}
 
 
