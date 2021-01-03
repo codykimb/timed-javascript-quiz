@@ -31,11 +31,17 @@ questionObjects = [
 var highscoreEl = document.querySelector("#highscore")
 var gameTimerEl = document.querySelector("#gameTimer")
 var mainEl= document.querySelector("#container-content")
+var responseEl = document.querySelector("#question-response")
+var timerTextEl = document.querySelector("#timer")
 
 // global variables
 var score = 0
 var timeLeft = 0
-qNumber = 0
+var qNumber = 0
+
+//timer is hidden
+timerTextEl.setAttribute("style", "visibility: hidden;");
+gameTimerEl.setAttribute("style", "visibility: hidden;");
 
 //call welcomeScreen function
 welcomeScreen();
@@ -43,6 +49,7 @@ welcomeScreen();
 //function for welcome sreen
 function welcomeScreen() {
 
+    clearResponses();
     clearContent();
     reset();
 
@@ -78,6 +85,12 @@ function clearContent() {
     mainEl.innerHTML="";
 }
 
+//function to clear response content
+function clearResponses() {
+    responseEl.innerHTML="";
+}
+
+
 //function to reset score
 function reset() {
     score = 0
@@ -87,9 +100,11 @@ function reset() {
 //function to play quiz
 function playQuiz() {
 
-    //start the timer
+    //start the timer and make it visible
     timeLeft = 75;
     timerStart();
+    timerTextEl.setAttribute("style", "visibility: visible;");
+    gameTimerEl.setAttribute("style", "visibility: visible;");
 
     //present with questions
     presentQuestion();
@@ -133,6 +148,7 @@ function presentQuestion() {
     }
 
     else {
+        gameTimerEl.textContent = score;
         endGame();
     }
 }
@@ -145,7 +161,7 @@ function scoreChoice() {
        console.log("Correct answer!")
        var choiceResponse = document.createElement("h3");
        choiceResponse.textContent = "Correct!"
-       choicesContainer.appendChild(choiceResponse);
+       responseEl.appendChild(choiceResponse);
 
    }
    else {
@@ -154,7 +170,7 @@ function scoreChoice() {
        
        var choiceResponse = document.createElement("h3");
        choiceResponse.textContent = "Wrong!"
-       choicesContainer.appendChild(choiceResponse);
+       responseEl.appendChild(choiceResponse);
    }
 
 
@@ -163,7 +179,7 @@ function scoreChoice() {
 //function to start timer
 function timerStart() {
 
-    setInterval(function() {
+    var currentTime = setInterval(function() {
         if (timeLeft > 1) {
             gameTimerEl.textContent = timeLeft
             timeLeft--
@@ -172,31 +188,35 @@ function timerStart() {
             gameTimerEl.textContent = timeLeft
             timeLeft--
         }
+        else if (gameTimerEl.textContent = score) {
+            clearInterval(currentTime);
+        }
         else {
+            clearInterval(currentTime);
             gameTimerEl.textContent = 0
+            endGame();
         }
 
     }, 1000);
-}
-
-function timerStop () {
-    clearInterval(timerStart())
 }
 
 //function to end game
 
 function endGame() {
 
+    //hide timer
+    gameTimerEl.setAttribute("style", "visibility: hidden;");
+    timerTextEl.setAttribute("style", "visibility: hidden;");
+
     //clear html content
     clearContent();
-    
-    //stop timer
-    timerStop();
 
     var heading = document.createElement("h2");
     heading.textContent = "All done!";
 
     score = timeLeft
+
+    var submitContainer = document.createElement("div");
 
     var finalScore = document.createElement("p");
     finalScore.textContent = "Your final score is " + score;
@@ -212,12 +232,65 @@ function endGame() {
     initialsInput.setAttribute("maxlength","3");
     initialsInput.setAttribute("size","3");
 
+    var submitBtn = document.createElement("button");
+    submitBtn.setAttribute("id", "submitBtn");
+    submitBtn.textContent = "Submit"
+
     mainEl.appendChild(heading);
     mainEl.appendChild(finalScore);
-    mainEl.appendChild(initialsLabel);
-    mainEl.appendChild(initialsInput);
+    mainEl.appendChild(submitContainer);
+    submitContainer.appendChild(initialsLabel);
+    submitContainer.appendChild(initialsInput);
+    submitContainer.appendChild(submitBtn);
+    
+    // create object for score
+    var quizScore = [ { initials: "input", score: score } ];
+
+}
+
+function highScores() {
+    
+    clearResponses();
+    clearContent();
+    
+    gameTimerEl.setAttribute("style", "visibility: hidden;");
+    timerTextEl.setAttribute("style", "visibility: hidden;");
+
+    var storedScores = JSON.parse(localStorage.getItem("highScores"));
+
+    //create heading and append
+    var heading = document.createElement("h2");
+    heading.setAttribute("id", "main-heading");
+    heading.textContent = "Top 5 High Scores:";
+
+    mainEl.appendChild(heading);
+
+    // create list of scores and append
+    var scoreList = document.createElement("ol");
+    mainEl.appendChild(scoreList)
+
+    if (!storedScores) {
+        var displayScore = document.createElement("p");
+                displayScore.textContent = "No scores yet...";
+                mainEl.appendChild(displayScore);
+    }  
+    else {
+        //sort scores
+        storedScores.sort(function(a,b) {return a - b});
+
+        //add scores to list
+        for (var i = 0; i < 5; i++) {
+            var displayScore = document.createElement("li");
+            displayScore.textContent = storedScores[i];
+            scoreList.appendChild(displayScore);
+        }
+    }
+
+    
 
 
 }
+
+highscoreEl.addEventListener("click", highScores)
 
 
