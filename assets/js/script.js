@@ -39,6 +39,7 @@ var scoresBtnEl = document.querySelector("#scoresBtn")
 var score = 0
 var timeLeft = 0
 var qNumber = 0
+var highScoresList = []
 
 //timer is hidden
 timerTextEl.setAttribute("style", "visibility: hidden;");
@@ -253,8 +254,7 @@ function endGame() {
         quizScore.score = score;
         console.log(quizScore)
 
-        localStorage.setItem("initials", quizScore.initials)
-        localStorage.setItem("highScore", quizScore.score) 
+        localStorage.setItem("highScores", quizScore)
 
         highScores()
     })
@@ -277,6 +277,7 @@ function highScores() {
 
     // create list for scores and append
     var scoreList = document.createElement("ol");
+    scoreList.setAttribute("id", "scoreList");
     mainEl.appendChild(scoreList)
     
     var storedIntials = localStorage.getItem("initials");

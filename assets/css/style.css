@@ -41,6 +41,28 @@ nav {
     list-style-type: none;
 }
 
+#scoreList li {
+    text-align: left;
+    width: 150px;
+    margin: 20px;
+    padding: 10px;
+    color: black;
+    background-color: rgba(128, 128, 128, 0.301);
+    border-radius: 0px;
+
+}
+
+#scoreList li:hover {
+    text-align: left;
+    width: 150px;
+    margin: 20px;
+    padding: 10px;
+    color: black;
+    list-style-type: decimal;
+    border-radius: 0px;
+
+}
+
 .quiz-container button {
     margin: 10px;
     padding: 5px;
