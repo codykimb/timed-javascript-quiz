@@ -205,6 +205,8 @@ function timerStart() {
             endGame();
         }
 
+        console.log(timeLeft);
+
     }, 1000);
 }
 

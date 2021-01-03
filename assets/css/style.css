@@ -1,9 +1,12 @@
+/* NAV STYLES */
+
 nav {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
     align-items: stretch;
     padding: 20px;
+    font-size: large;
 }
 
 #highscore {
@@ -12,6 +15,17 @@ nav {
 
 #highscore:hover {
     color:navy;
+}
+/* end */
+
+/* MAIN STYLES */
+
+h2 {
+    font-size: xx-large;
+}
+
+p, label {
+    font-size: large;
 }
 
 .quiz-container {
@@ -64,6 +78,7 @@ nav {
     background-color: navy;
     border-radius: 10px;
     border-style: none;
+    font-size: large;
 }
 
 .quiz-container button:hover {
