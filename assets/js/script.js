@@ -282,7 +282,7 @@ function highScores() {
     //create heading and append
     var heading = document.createElement("h2");
     heading.setAttribute("id", "main-heading");
-    heading.textContent = "Top 5 High Scores:";
+    heading.textContent = "High Scores:";
 
     mainEl.appendChild(heading);
 
@@ -318,6 +318,7 @@ function highScores() {
                 // console.log(JSON.parse(highScoresList));
                 
                 displayScore.textContent = highScoresList[i].initials + " - " + highScoresList[i].score;
+                displayScore.setAttribute("id", "scoreList");
                 scoreList.appendChild(displayScore);
         }
 

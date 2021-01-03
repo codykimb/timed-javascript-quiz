@@ -20,11 +20,6 @@ nav {
     text-align: center;
 }
 
-.quiz-container ol {
-    
-    list-style: 
-}
-
 .quiz-container li {
     text-align: left;
     width: 150px;
@@ -41,7 +36,7 @@ nav {
     list-style-type: none;
 }
 
-#scoreList li {
+#scoreList {
     text-align: left;
     width: 150px;
     margin: 20px;
@@ -52,7 +47,7 @@ nav {
 
 }
 
-#scoreList li:hover {
+#scoreList:hover {
     text-align: left;
     width: 150px;
     margin: 20px;
