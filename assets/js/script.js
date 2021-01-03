@@ -6,7 +6,7 @@ questionObjects = [
         answer: "3. alerts"
     },
     {
-        question: "The condition in and if/else statement is enclosed with ___.",
+        question: "The condition in an if/else statement is enclosed with ___.",
         choices: ["1. quotes", "2. curly brackets", "3. parenthesis", "4. square brackets"],
         answer: "3. parenthesis"
     },
@@ -64,6 +64,8 @@ function welcomeScreen() {
     clearContent();
     reset();
 
+    highscoreEl.setAttribute("style", "visibility: visible;");
+
     //create main text
     var heading = document.createElement("h2");
     heading.setAttribute("id", "main-heading");
@@ -117,6 +119,9 @@ function playQuiz() {
     timerTextEl.setAttribute("style", "visibility: visible;");
     gameTimerEl.setAttribute("style", "visibility: visible;");
 
+    //hide high sores
+    highscoreEl.setAttribute("style", "visibility: hidden;");
+
     //present with questions
     presentQuestion();
 }
@@ -160,7 +165,9 @@ function presentQuestion() {
     }
 
     else {
+
         gameTimerEl.textContent = score;
+        qNumber = 0
         clearInterval(currentTime);
         endGame();
     }
@@ -285,6 +292,8 @@ function highScores() {
     
     gameTimerEl.setAttribute("style", "visibility: hidden;");
     timerTextEl.setAttribute("style", "visibility: hidden;");
+    highscoreEl.setAttribute("style", "visibility: hidden;");
+
 
     //create heading and append
     var heading = document.createElement("h2");
@@ -342,8 +351,8 @@ function highScores() {
             mainEl.appendChild(clearBtn);
             clearBtn.addEventListener("click", function() {
                 localStorage.clear()
+                highScoresList = []
                 highScores()
-
             } );
     }
 }
