@@ -38,6 +38,7 @@ var timerTextEl = document.querySelector("#timer")
 var score = 0
 var timeLeft = 0
 var qNumber = 0
+var currentTime;
 
 var highScoresList = []
 
@@ -104,7 +105,7 @@ function clearResponses() {
 //function to reset score
 function reset() {
     score = 0
-    timeLeft = 0
+    timeLeft = 75
 }
 
 //function to play quiz
@@ -160,6 +161,7 @@ function presentQuestion() {
 
     else {
         gameTimerEl.textContent = score;
+        clearInterval(currentTime);
         endGame();
     }
 }
@@ -187,7 +189,7 @@ function scoreChoice() {
 //function to start timer
 function timerStart() {
 
-    var currentTime = setInterval(function() {
+    currentTime = setInterval(function() {
         if (timeLeft > 1) {
             gameTimerEl.textContent = timeLeft
             timeLeft--
@@ -196,9 +198,9 @@ function timerStart() {
             gameTimerEl.textContent = timeLeft
             timeLeft--
         }
-        else if (gameTimerEl.textContent = score) {
-            clearInterval(currentTime);
-        }
+        // else if (gameTimerEl.textContent = score) {
+        //     clearInterval(currentTime);
+        // }
         else {
             clearInterval(currentTime);
             gameTimerEl.textContent = 0
@@ -271,6 +273,9 @@ function endGame() {
 
         highScores()
     })
+
+    clearInterval(currentTime);
+
 }
 
 function highScores() {
