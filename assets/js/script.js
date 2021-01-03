@@ -39,7 +39,15 @@ var scoresBtnEl = document.querySelector("#scoresBtn")
 var score = 0
 var timeLeft = 0
 var qNumber = 0
+
 var highScoresList = []
+
+if (localStorage.getItem("highScores") !== null ) {
+
+    highScoresList = [JSON.parse(localStorage.getItem("highScores"))]
+    console.log(highScoresList)
+
+}
 
 //timer is hidden
 timerTextEl.setAttribute("style", "visibility: hidden;");
@@ -164,7 +172,6 @@ function scoreChoice() {
        var choiceResponse = document.createElement("h3");
        choiceResponse.textContent = "Correct!"
        responseEl.appendChild(choiceResponse);
-
    }
    else {
        console.log("Wrong answer!");
@@ -174,8 +181,6 @@ function scoreChoice() {
        choiceResponse.textContent = "Wrong!"
        responseEl.appendChild(choiceResponse);
    }
-
-
 }
 
 //function to start timer
@@ -246,15 +251,20 @@ function endGame() {
     submitContainer.appendChild(submitBtn);
     
     // create object for score
-    var quizScore = [ { initials: "input", score: score } ];
+    var quizScore = { initials: "input", score: score };
     
     // add input and score to quizScore object
     submitBtn.addEventListener("click", function(){
+        
         quizScore.initials = document.getElementById("userInitials").value.toUpperCase();
         quizScore.score = score;
         console.log(quizScore)
 
-        localStorage.setItem("highScores", quizScore)
+        highScoresList.push(quizScore)
+
+        console.log(highScoresList)
+
+        localStorage.setItem("highScores", JSON.stringify(highScoresList))
 
         highScores()
     })
@@ -280,8 +290,8 @@ function highScores() {
     scoreList.setAttribute("id", "scoreList");
     mainEl.appendChild(scoreList)
     
-    var storedIntials = localStorage.getItem("initials");
-    var storedScores = JSON.parse(localStorage.getItem("highScore"));
+    // var storedIntials = localStorage.getItem("highScores");
+    var storedScores = (localStorage.getItem("highScores"));
 
     if (!storedScores) {
         var displayScore = document.createElement("p");
@@ -302,14 +312,14 @@ function highScores() {
         // storedScores.sort(function(a,b) {return a - b});
 
         //add scores to list
-        for (var i = 0; i < [storedScores.length] + 1; i++) {
+        for (var i = 0; i < highScoresList.length; i++) {
             var displayScore = document.createElement("li");
             
-            console.log(storedIntials)
-            console.log(JSON.stringify(storedScores))
-            
-            displayScore.textContent = storedIntials + " - " + JSON.stringify(storedScores);
-            scoreList.appendChild(displayScore);
+                console.log(highScoresList[i])
+                // console.log(JSON.parse(highScoresList));
+                
+                displayScore.textContent = JSON.stringify(highScoresList[i]) + " - " ;
+                scoreList.appendChild(displayScore);
         }
 
         var scoresBtn = document.createElement("button")
