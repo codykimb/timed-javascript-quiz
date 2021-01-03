@@ -10,7 +10,7 @@ nav {
     flex-wrap: wrap;
     align-items: stretch;
     padding: 20px;
-    font-size: large;
+    font-size: 3vw;
 }
 
 #highscore {
@@ -26,15 +26,15 @@ nav {
 /* MAIN STYLES */
 
 h2 {
-    font-size: xx-large;
+    font-size: 5vw;
 }
 
 p, label {
-    font-size: large;
+    font-size: 3vw;
 }
 
 .quiz-container {
-    width: 400px;
+    width: 70%;
     margin: auto;
     text-align: center;
 }
@@ -78,7 +78,7 @@ p, label {
     background-color: navy;
     border-radius: 10px;
     border-style: none;
-    font-size: large;
+    font-size: 2.5vw;
 }
 
 .quiz-container button:hover {
@@ -88,6 +88,28 @@ p, label {
 h3 {
     color: gray;
     text-align: left;
+    font-size: 4vw;
 }
 
 /* end  */
+
+/* MEDIA QUERY FOR TABLETS AND SMALLER */
+@media screen and (max-width: 768px) {
+
+    /* NO HOVER CHANGES */
+    #highscore:hover {
+        color: blueviolet;
+    }
+
+    #scoreList:hover {
+        background-color: rgba(128, 128, 128, 0.301);
+    }
+
+    .quiz-container li:hover {
+        background-color:navy;
+    }
+
+    .quiz-container button:hover {
+        background-color: navy;
+    }
+}
