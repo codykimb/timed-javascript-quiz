@@ -14,7 +14,7 @@ nav {
 }
 
 #highscore {
-    color: hotpink;
+    color: blueviolet;
     text-shadow:1px 1px rgba(0, 0, 0, 0.459);
 }
 
@@ -51,7 +51,7 @@ p, label {
 }
 
 .quiz-container li:hover {
-    background-color: hotpink;
+    background-color: teal;
     color: navy;
     list-style-type: none;
 }
@@ -82,7 +82,7 @@ p, label {
 }
 
 .quiz-container button:hover {
-    background-color: hotpink;
+    background-color: teal;
 }
 
 h3 {
