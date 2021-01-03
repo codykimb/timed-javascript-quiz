@@ -3,7 +3,7 @@
 This is a timed JavaScript Quiz!  
   
 REPOSITORY:  
-https://github.com/codykimb/timed-javascript-quiz  
+https://github.com/codykimb/timed-javascript-quiz/ 
   
 DEPLOYED APPLICATION:  
 https://codykimb.github.io/timed-javascript-quiz/

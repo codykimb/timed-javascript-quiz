@@ -21,7 +21,7 @@ questionObjects = [
         answer: "1. commas"
     },
     {
-        question: "A very useful tool used during development and debugging for porinting content to the debugger is:",
+        question: "A very useful tool used during development and debugging for printing content to the debugger is:",
         choices: ["1. Javascript", "2. terminal/bash", "3. for loops", "4. console.log"],
         answer: "4. console.log"
     },
