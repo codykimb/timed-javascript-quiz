@@ -33,6 +33,7 @@ var gameTimerEl = document.querySelector("#gameTimer")
 var mainEl= document.querySelector("#container-content")
 var responseEl = document.querySelector("#question-response")
 var timerTextEl = document.querySelector("#timer")
+var scoresBtnEl = document.querySelector("#scoresBtn")
 
 // global variables
 var score = 0
@@ -245,7 +246,18 @@ function endGame() {
     
     // create object for score
     var quizScore = [ { initials: "input", score: score } ];
+    
+    // add input and score to quizScore object
+    submitBtn.addEventListener("click", function(){
+        quizScore.initials = document.getElementById("userInitials").value.toUpperCase();
+        quizScore.score = score;
+        console.log(quizScore)
 
+        localStorage.setItem("initials", quizScore.initials)
+        localStorage.setItem("highScore", quizScore.score) 
+
+        highScores()
+    })
 }
 
 function highScores() {
@@ -256,8 +268,6 @@ function highScores() {
     gameTimerEl.setAttribute("style", "visibility: hidden;");
     timerTextEl.setAttribute("style", "visibility: hidden;");
 
-    var storedScores = JSON.parse(localStorage.getItem("highScores"));
-
     //create heading and append
     var heading = document.createElement("h2");
     heading.setAttribute("id", "main-heading");
@@ -265,25 +275,56 @@ function highScores() {
 
     mainEl.appendChild(heading);
 
-    // create list of scores and append
+    // create list for scores and append
     var scoreList = document.createElement("ol");
     mainEl.appendChild(scoreList)
+    
+    var storedIntials = localStorage.getItem("initials");
+    var storedScores = JSON.parse(localStorage.getItem("highScore"));
 
     if (!storedScores) {
         var displayScore = document.createElement("p");
-                displayScore.textContent = "No scores yet...";
-                mainEl.appendChild(displayScore);
+            displayScore.textContent = "No scores yet...";
+            mainEl.appendChild(displayScore);
+        
+        var scoresBtn = document.createElement("button")
+            scoresBtn.textContent = "Go Back";
+            mainEl.appendChild(scoresBtn);
+            // scoresBtn.setAttribute("id", "scoresBtn")
+            // scoresBtnEl.addEventListener("click", function() {
+            //     welcomeScreen()
+            // } );
     }  
     else {
+
         //sort scores
-        storedScores.sort(function(a,b) {return a - b});
+        // storedScores.sort(function(a,b) {return a - b});
 
         //add scores to list
-        for (var i = 0; i < 5; i++) {
+        for (var i = 0; i < [storedScores.length] + 1; i++) {
             var displayScore = document.createElement("li");
-            displayScore.textContent = storedScores[i];
+            
+            console.log(storedIntials)
+            console.log(JSON.stringify(storedScores))
+            
+            displayScore.textContent = storedIntials + " - " + JSON.stringify(storedScores);
             scoreList.appendChild(displayScore);
         }
+
+        var scoresBtn = document.createElement("button")
+            scoresBtn.textContent = "Go Back";
+            mainEl.appendChild(scoresBtn);
+            // scoresBtn.setAttribute("id", "scoresBtn")
+            // scoresBtnEl.addEventListener("click", function() {
+            //     welcomeScreen()
+            // } );
+
+        var clearBtn = document.createElement("button")
+            clearBtn.textContent = "Clear High Scores";
+            mainEl.appendChild(clearBtn);
+            // scoresBtnEl.addEventListener("click", function() {
+            //     localStorage.clear()
+            // } );
     }
 
     
