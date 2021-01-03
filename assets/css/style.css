@@ -107,6 +107,8 @@ h3 {
 
     .quiz-container li:hover {
         background-color:navy;
+        color: white;
+
     }
 
     .quiz-container button:hover {
