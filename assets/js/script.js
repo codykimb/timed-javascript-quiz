@@ -44,7 +44,7 @@ var highScoresList = []
 
 if (localStorage.getItem("highScores") !== null ) {
 
-    highScoresList = [JSON.parse(localStorage.getItem("highScores"))]
+    highScoresList = JSON.parse(localStorage.getItem("highScores"))
     console.log(highScoresList)
 
 }
@@ -318,7 +318,7 @@ function highScores() {
                 console.log(highScoresList[i])
                 // console.log(JSON.parse(highScoresList));
                 
-                displayScore.textContent = JSON.stringify(highScoresList[i]) + " - " ;
+                displayScore.textContent = highScoresList[i].initials + " - " + highScoresList[i].score;
                 scoreList.appendChild(displayScore);
         }
 

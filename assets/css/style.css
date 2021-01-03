@@ -60,7 +60,6 @@ nav {
     color: black;
     list-style-type: decimal;
     border-radius: 0px;
-
 }
 
 .quiz-container button {
@@ -70,8 +69,6 @@ nav {
     background-color: navy;
     border-radius: 10px;
     border-style: none;
-
-
 }
 
 .quiz-container button:hover {
