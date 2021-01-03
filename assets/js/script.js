@@ -33,7 +33,6 @@ var gameTimerEl = document.querySelector("#gameTimer")
 var mainEl= document.querySelector("#container-content")
 var responseEl = document.querySelector("#question-response")
 var timerTextEl = document.querySelector("#timer")
-var scoresBtnEl = document.querySelector("#scoresBtn")
 
 // global variables
 var score = 0
@@ -45,6 +44,7 @@ var highScoresList = []
 if (localStorage.getItem("highScores") !== null ) {
 
     highScoresList = JSON.parse(localStorage.getItem("highScores"))
+    
     console.log(highScoresList)
 
 }
@@ -148,6 +148,7 @@ function presentQuestion() {
 
         //score after clicking
         choicesContainer.addEventListener("click", function() {
+            
             scoreChoice();
 
             qNumber++;
@@ -290,7 +291,6 @@ function highScores() {
     scoreList.setAttribute("id", "scoreList");
     mainEl.appendChild(scoreList)
     
-    // var storedIntials = localStorage.getItem("highScores");
     var storedScores = (localStorage.getItem("highScores"));
 
     if (!storedScores) {
@@ -298,18 +298,17 @@ function highScores() {
             displayScore.textContent = "No scores yet...";
             mainEl.appendChild(displayScore);
         
-        var scoresBtn = document.createElement("button")
-            scoresBtn.textContent = "Go Back";
-            mainEl.appendChild(scoresBtn);
-            // scoresBtn.setAttribute("id", "scoresBtn")
-            // scoresBtnEl.addEventListener("click", function() {
-            //     welcomeScreen()
-            // } );
+        var goBackBtn = document.createElement("button")
+            goBackBtn.textContent = "Go Back";
+            mainEl.appendChild(goBackBtn);
+            goBackBtn.addEventListener("click", function() {
+                welcomeScreen()
+            } );
     }  
     else {
 
         //sort scores
-        // storedScores.sort(function(a,b) {return a - b});
+        highScoresList.sort((a, b) => (a.score < b.score) ? 1 : -1);
 
         //add scores to list
         for (var i = 0; i < highScoresList.length; i++) {
@@ -322,25 +321,23 @@ function highScores() {
                 scoreList.appendChild(displayScore);
         }
 
-        var scoresBtn = document.createElement("button")
-            scoresBtn.textContent = "Go Back";
-            mainEl.appendChild(scoresBtn);
-            // scoresBtn.setAttribute("id", "scoresBtn")
-            // scoresBtnEl.addEventListener("click", function() {
-            //     welcomeScreen()
-            // } );
+        var goBackBtn = document.createElement("button")
+            goBackBtn.textContent = "Go Back";
+            mainEl.appendChild(goBackBtn);
+            goBackBtn.addEventListener("click", function() {
+                welcomeScreen()
+
+            } );
 
         var clearBtn = document.createElement("button")
             clearBtn.textContent = "Clear High Scores";
             mainEl.appendChild(clearBtn);
-            // scoresBtnEl.addEventListener("click", function() {
-            //     localStorage.clear()
-            // } );
+            clearBtn.addEventListener("click", function() {
+                localStorage.clear()
+                highScores()
+
+            } );
     }
-
-    
-
-
 }
 
 highscoreEl.addEventListener("click", highScores)
