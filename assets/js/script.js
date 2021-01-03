@@ -46,6 +46,7 @@ if (localStorage.getItem("highScores") !== null ) {
 
     highScoresList = JSON.parse(localStorage.getItem("highScores"))
     
+    //log highScoresList
     console.log(highScoresList)
 
 }
@@ -119,8 +120,8 @@ function playQuiz() {
     timerTextEl.setAttribute("style", "visibility: visible;");
     gameTimerEl.setAttribute("style", "visibility: visible;");
 
-    //hide high sores
-    highscoreEl.setAttribute("style", "visibility: hidden;");
+    // hide high scores (decided to leave it visible so the user had an way to quit the quiz early)
+    // highscoreEl.setAttribute("style", "visibility: hidden;");
 
     //present with questions
     presentQuestion();
@@ -152,20 +153,18 @@ function presentQuestion() {
             choicesContainer.appendChild(choice);
         }
 
-        //score after clicking
+        //score after clicking and present new question
         choicesContainer.addEventListener("click", function() {
             
             scoreChoice();
-
             qNumber++;
-
             presentQuestion();
 
             }); 
     }
 
     else {
-
+        //stop the timer and end the game
         gameTimerEl.textContent = score;
         qNumber = 0
         clearInterval(currentTime);
@@ -173,16 +172,20 @@ function presentQuestion() {
     }
 }
 
+//function to score user choice
 function scoreChoice() {
    var selectedChoice = event.target;
     console.log(questionObjects[qNumber].answer)
 
+    //if they are correct, console log and display response
    if (selectedChoice.innerHTML === questionObjects[qNumber].answer) {
        console.log("Correct answer!")
        var choiceResponse = document.createElement("h3");
        choiceResponse.textContent = "Correct!"
        responseEl.appendChild(choiceResponse);
    }
+    
+   //if they are wrong, console log and display response, deduct 10 sec
    else {
        console.log("Wrong answer!");
        timeLeft -=10;
@@ -205,15 +208,13 @@ function timerStart() {
             gameTimerEl.textContent = timeLeft
             timeLeft--
         }
-        // else if (gameTimerEl.textContent = score) {
-        //     clearInterval(currentTime);
-        // }
         else {
             clearInterval(currentTime);
             gameTimerEl.textContent = 0
             endGame();
         }
 
+        //time log
         console.log(timeLeft)
 
     }, 1000);
@@ -230,6 +231,7 @@ function endGame() {
     //clear html content
     clearContent();
 
+    // add elements and append
     var heading = document.createElement("h2");
     heading.textContent = "All done!";
 
@@ -270,23 +272,31 @@ function endGame() {
         
         quizScore.initials = document.getElementById("userInitials").value.toUpperCase();
         quizScore.score = score;
-        console.log(quizScore)
+
+        // test
+        // console.log(quizScore)
 
         highScoresList.push(quizScore)
 
-        console.log(highScoresList)
+        //test
+        // console.log(highScoresList)
 
         localStorage.setItem("highScores", JSON.stringify(highScoresList))
 
         highScores()
     })
 
+    //stos the timer
     clearInterval(currentTime);
 
 }
 
 function highScores() {
     
+    //stop the timer, reset game, clear screen
+    gameTimerEl.textContent = score;
+    qNumber = 0
+    clearInterval(currentTime);
     clearResponses();
     clearContent();
     
@@ -304,11 +314,11 @@ function highScores() {
 
     // create list for scores and append
     var scoreList = document.createElement("ol");
-    scoreList.setAttribute("id", "scoreList");
     mainEl.appendChild(scoreList)
     
     var storedScores = (localStorage.getItem("highScores"));
 
+    // if there are no high scores tell user and display Go Back button
     if (!storedScores) {
         var displayScore = document.createElement("p");
             displayScore.textContent = "No scores yet...";
@@ -321,6 +331,7 @@ function highScores() {
                 welcomeScreen()
             } );
     }  
+    //if there are high scores...
     else {
 
         //sort scores
@@ -331,6 +342,8 @@ function highScores() {
             var displayScore = document.createElement("li");
             
                 console.log(highScoresList[i])
+
+                // test
                 // console.log(JSON.parse(highScoresList));
                 
                 displayScore.textContent = highScoresList[i].initials + " - " + highScoresList[i].score;
@@ -338,6 +351,7 @@ function highScores() {
                 scoreList.appendChild(displayScore);
         }
 
+        // Go Back button
         var goBackBtn = document.createElement("button")
             goBackBtn.textContent = "Go Back";
             mainEl.appendChild(goBackBtn);
@@ -346,10 +360,13 @@ function highScores() {
 
             } );
 
+        //Clear High Scores button
         var clearBtn = document.createElement("button")
             clearBtn.textContent = "Clear High Scores";
             mainEl.appendChild(clearBtn);
             clearBtn.addEventListener("click", function() {
+                
+                //clear local storage AND highScoresList array, display highScores screen
                 localStorage.clear()
                 highScoresList = []
                 highScores()

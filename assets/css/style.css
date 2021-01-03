@@ -1,3 +1,7 @@
+* {
+    background-color: rgb(190, 206, 226);
+}
+
 /* NAV STYLES */
 
 nav {
@@ -11,6 +15,7 @@ nav {
 
 #highscore {
     color: hotpink;
+    text-shadow:1px 1px rgba(0, 0, 0, 0.459);
 }
 
 #highscore:hover {
@@ -42,6 +47,7 @@ p, label {
     color: white;
     background-color:navy;
     border-radius: 10px;
+    list-style-type: none;
 }
 
 .quiz-container li:hover {
@@ -52,23 +58,17 @@ p, label {
 
 #scoreList {
     text-align: left;
-    width: 150px;
+    width: 260px;
     margin: 20px;
     padding: 10px;
     color: black;
     background-color: rgba(128, 128, 128, 0.301);
     border-radius: 0px;
-
+    list-style-type: decimal;
 }
 
 #scoreList:hover {
-    text-align: left;
-    width: 150px;
-    margin: 20px;
-    padding: 10px;
-    color: black;
-    list-style-type: decimal;
-    border-radius: 0px;
+    background-color: rgba(128, 128, 128, 0.801);
 }
 
 .quiz-container button {
@@ -89,3 +89,5 @@ h3 {
     color: gray;
     text-align: left;
 }
+
+/* end  */
